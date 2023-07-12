@@ -29,6 +29,8 @@ public class GameDTO {
 		BeanUtils.copyProperties(entity, this);  //Passagem de tudo que está na entidade (Game) para esse DTO (GameDTO)
 	}
 
+	//Obs: Com o uso do método 'BeansUtils' é necessário a declaração tanto dos métodos getters como setters  
+	
 	//Declarando métodos getters e setters
 	public Long getId() {
 		return id;
