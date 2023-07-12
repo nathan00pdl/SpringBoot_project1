@@ -13,9 +13,8 @@ import jakarta.persistence.Table;
 @Table (name = "tb_game")
 public class Game {
 
-	//Declarando atributos para a classe 'Game'
+	//Declarando atributos
 	@Id  //Definição do atributo 'id' como primary key 
-	
 	@GeneratedValue (strategy = GenerationType.IDENTITY)  //'id' autoincrementado pelo banco de dados
 	private Long id;
 	
