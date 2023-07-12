@@ -2,9 +2,10 @@ package com.devsuperior.dslist.dto;
 
 import com.devsuperior.dslist.entities.Game;
 
+//Versão da classe 'Game', porém com apenas alguns atributos selecionados
 public class GameMinDTO {
 
-	// Declarando atributos para a classe 'Game'
+	// Declarando atributos 
 	private Long id;
 	private String title;
 	private Integer year;

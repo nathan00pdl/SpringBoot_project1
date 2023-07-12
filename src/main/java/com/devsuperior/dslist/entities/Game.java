@@ -9,6 +9,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+//'Game' é uma entidade mapeada com o banco de dados
+
 @Entity  //Configuração da classe java ('Game') para equivaler a uma tabela do banco relacional
 @Table (name = "tb_game")
 public class Game {
