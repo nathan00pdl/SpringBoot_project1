@@ -8,7 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.devsuperior.dslist.dto.GameListDTO;
 import com.devsuperior.dslist.entities.GameList;
+import com.devsuperior.dslist.projections.GameMinProjection;
 import com.devsuperior.dslist.reppositories.GameListRepository;
+import com.devsuperior.dslist.reppositories.GameRepository;
 
 
 
@@ -23,5 +25,30 @@ public class GameListService {
 	public List<GameListDTO> findAll(){
 		List<GameList> result = gameListRepository.findAll();  //'findAll()' é um método disponibilizado pelo próprio Spring
 		return result.stream().map(x -> new GameListDTO(x)).toList();
+	}
+	
+	
+	@Autowired //"injeção" de uma instância da classe 'GameRepository' na classe 'GameListService'
+	private GameRepository gameRepository;
+	
+	//Lógica de alteração das posições dos jogos
+	@Transactional
+	public void move(Long listId, int sourceIndex, int destinationIndex) {
+		
+		//Buscando da memória a lista de jogos
+		List<GameMinProjection> list = gameRepository.searchByList(listId);
+		
+		//Obs: Alteração de posição -> remove o jogo de uma posição (sourceIndex) e insere na posição escolhida (destinationIndex)
+		GameMinProjection obj = list.remove(sourceIndex);
+		list.add(destinationIndex, obj);
+		
+		//Declaração de variáveis para guardar a posição "mínima" e "máxima" entre 'sourceIndex' e 'destinationIndex'
+		//"Se sourceIndex for menor que destinationIndex, então (?) o mínimo é sourceIndex, caso contrário (:) será o destinationIndex"
+		int min = sourceIndex < destinationIndex ? sourceIndex : destinationIndex;
+		int max = sourceIndex < destinationIndex ? destinationIndex : sourceIndex;
+		
+		for(int i=min ; i<=max ; i++) {
+			gameListRepository.updateBelongingPosition(listId, list.get(i).getId(), i);
+		}
 	}
 }
